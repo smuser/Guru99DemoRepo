@@ -1,6 +1,7 @@
 package com.guru.qa.testcases;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,14 @@ import org.testng.annotations.Test;
 
 import com.guru.qa.base.GuruTestBase;
 import com.guru.qa.pages.HomePage;
+import com.guru.qa.util.TestUtil;
 
 //Author @ShaheenM 
 
 public class HomePageTest extends GuruTestBase{
 	HomePage homePage;
-
+    TestUtil testUtil;
+	
 	public HomePageTest() throws FileNotFoundException {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,14 +41,17 @@ public class HomePageTest extends GuruTestBase{
 	}
 	
 	@Test(priority=2)
-	public void validateGuruLogoTest() {
+	public void validateGuruLogoTest() throws IOException {
 		boolean flag = homePage.validateGuruLogo();
 		Assert.assertTrue(flag);
+		TestUtil.takeScreenshotAtEndOfTest();
 	}
 	
 	@Test(priority=0)
-	public void validateListOfTutorialsTest() {
+	public void validateListOfTutorialsTest() throws Exception {
 		homePage.validateListOfTutorials();
+		TestUtil.takeScreenshotAtEndOfTest();
+
 	}
 	
 	@AfterMethod
