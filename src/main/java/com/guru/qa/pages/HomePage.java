@@ -50,6 +50,7 @@ public class HomePage extends GuruTestBase{
 			System.out.println(list.getText());
 			if(list.getText().contains("QTP")) {
 				list.click();	
+				TestUtil.highlightElementForTest(list);
 				System.out.println("Clicked Link page title is: " +driver.getTitle());
 				driver.manage().timeouts().implicitlyWait(TestUtil.IMPLICIT_WAIT, TimeUnit.SECONDS);
 				break;
