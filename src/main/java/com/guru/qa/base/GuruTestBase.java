@@ -9,13 +9,17 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import com.guru.qa.util.TestUtil;
+import com.guru.qa.util.WebEventListener;
 
 public class GuruTestBase {
 	
 	public static WebDriver driver;
 	public static Properties prop;
+	public static EventFiringWebDriver edriver;
+	public static WebEventListener eventlistener;
 	   
 	public GuruTestBase() 
 	{
@@ -36,6 +40,7 @@ public class GuruTestBase {
 		
 		String browserName = prop.getProperty("browser");
 		
+		//To invoke browser
 		if(browserName.equals("CHROME")) {
 			System.setProperty("webdriver.chrome.driver",
 					"C:\\Users\\deepa\\Downloads\\StudyStuff\\chromedriver_win32 (2)\\chromedriver.exe");
@@ -47,6 +52,13 @@ public class GuruTestBase {
 			driver = new FirefoxDriver();
 		}
 		
+		//log each event when being performed
+		edriver = new EventFiringWebDriver(driver);
+		eventlistener = new WebEventListener();
+		edriver.register(eventlistener);
+		driver = edriver;		
+		
+		//Basic events on browser
 		driver.manage().window().maximize();
 		driver.manage().timeouts().pageLoadTimeout(TestUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
 		driver.manage().timeouts().implicitlyWait(TestUtil.IMPLICIT_WAIT, TimeUnit.SECONDS);
